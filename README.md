@@ -4,7 +4,7 @@ GO VEGAN 🌱
 
 ==================================
 
-From the mighty people of Iran to the people of Slovenia to view examples:
+From the mighty people of Iran to the peaceful people of Slovenia to view examples:
 
 https://platexample.ir/#/discover/slovenia
 
