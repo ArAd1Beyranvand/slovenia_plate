@@ -7,6 +7,7 @@ import 'package:plate_core/plate_core.dart';
 
 import 'slovenia_colors.dart';
 import 'slovenia_country.dart';
+import 'slovenia_regions.dart';
 
 /// Where the ink sits, in plate units. Every photo is flattened to the
 /// 520×120 the article gives (4 px per unit).
@@ -95,6 +96,7 @@ abstract final class SloveniaPlates {
     b: _Layout.privateLetters,
     bAlphabet: SloveniaAlphabets.letters,
     dashCx: 375,
+    resolveRegion: SloveniaRegions.captionOf,
   );
 
   static final PlateSpec exportPlate = _spec(
@@ -106,6 +108,7 @@ abstract final class SloveniaPlates {
     b: _Layout.exportDigits,
     bAlphabet: SloveniaAlphabets.digits,
     dashCx: 274,
+    resolveRegion: SloveniaRegions.captionOf,
   );
 
   static final PlateSpec police = _spec(
@@ -177,6 +180,7 @@ abstract final class SloveniaPlates {
     required double dashCx,
     bool band = false,
     Color? regionColor,
+    PlateLabelResolver? resolveRegion,
   }) {
     final List<PlateSlot> slots = <PlateSlot>[
       ..._slots(region, regionAlphabet, regionColor),
@@ -240,6 +244,7 @@ abstract final class SloveniaPlates {
         ),
       ],
       textGroups: <PlateTextGroup>[group(region), group(a), group(b)],
+      resolveRegion: resolveRegion,
     );
   }
 }
