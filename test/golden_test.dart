@@ -29,18 +29,18 @@ void main() {
         'private': (
           SloveniaPlates.private,
           SloveniaThemes.private,
-          'L J 8 9 8 K P',
+          'LJ 898 KP',
         ),
         'export': (
           SloveniaPlates.exportPlate,
           SloveniaThemes.exportPlate,
-          'M B L L 2 5 1',
+          'MB LL 251',
         ),
-        'police': (SloveniaPlates.police, SloveniaThemes.police, 'P 0 6 6 9 7'),
+        'police': (SloveniaPlates.police, SloveniaThemes.police, 'P 06 697'),
         'diplomatic': (
           SloveniaPlates.diplomatic,
           SloveniaThemes.diplomatic,
-          'C D 0 8 0 5',
+          'CD 08 05',
         ),
       };
 
@@ -81,4 +81,23 @@ void main() {
       controller.dispose();
     });
   }
+
+  test('each group is one slot of its printed length', () {
+    expect(SloveniaPlates.private.slots.map((PlateSlot s) => s.length), <int>[
+      2,
+      3,
+      2,
+    ]);
+    expect(SloveniaPlates.police.slots.map((PlateSlot s) => s.length), <int>[
+      1,
+      2,
+      3,
+    ]);
+    final PlateController c = PlateController.fromValues(
+      SloveniaPlates.private,
+      <String?>['LJ', '89', 'KP'],
+    );
+    expect(c.isCompleted, isFalse);
+    c.dispose();
+  });
 }

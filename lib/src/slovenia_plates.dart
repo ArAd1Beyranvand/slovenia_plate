@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' show Color;
 
 import 'package:flutter/widgets.dart' show EdgeInsets;
@@ -46,11 +47,7 @@ abstract final class _Layout {
   static const double dashWidth = 30;
 
   static const _Group privateRegion = _Group('region', <double>[85, 133], 48);
-  static const _Group privateDigits = _Group('a', <double>[
-    240,
-    288,
-    336,
-  ], 48);
+  static const _Group privateDigits = _Group('a', <double>[240, 288, 336], 48);
   static const _Group privateLetters = _Group('b', <double>[412, 470], 58);
 
   static const _Group exportRegion = _Group('region', <double>[65, 117], 52);
@@ -66,7 +63,7 @@ abstract final class _Layout {
   static const _Group dipSecond = _Group('b', <double>[403, 449], 46);
 }
 
-/// One keyed group of slots at the given centres, each [width] wide.
+/// One keyed field whose cells sit at the given centres, each [width] wide.
 class _Group {
   const _Group(this.key, this.centres, this.width);
 
@@ -143,23 +140,31 @@ abstract final class SloveniaPlates {
     diplomatic,
   ];
 
+  /// The group as one field: its box spans the cells at their pitch.
   static List<PlateSlot> _slots(
     _Group group,
     PlateAlphabet alphabet,
     Color? color,
-  ) => <PlateSlot>[
-    for (final double cx in group.centres)
+  ) {
+    final int count = group.centres.length;
+    final double pitch = count > 1
+        ? (group.centres.last - group.centres.first) / (count - 1)
+        : group.width;
+    return <PlateSlot>[
       PlateSlot(
         alphabet: alphabet,
         box: PlateBox(
-          cx - group.width / 2,
+          group.centres.first - pitch / 2,
           _Layout.top,
-          group.width,
+          count * pitch,
           _Layout.box,
         ),
         color: color,
+        length: count,
+        spacing: max(0, pitch - 0.6 * 0.72 * _Layout.box),
       ),
-  ];
+    ];
+  }
 
   static PlateSpec _spec({
     required String id,
@@ -180,11 +185,7 @@ abstract final class SloveniaPlates {
     ];
     int next = 0;
     PlateTextGroup group(_Group g) {
-      final PlateTextGroup out = PlateTextGroup(<int>[
-        for (int i = 0; i < g.centres.length; i++) next + i,
-      ], key: g.key);
-      next += g.centres.length;
-      return out;
+      return PlateTextGroup(<int>[next++], key: g.key);
     }
 
     return PlateSpec(
