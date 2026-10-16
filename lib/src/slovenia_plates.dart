@@ -39,7 +39,7 @@ abstract final class _Layout {
   static const double box = 120, top = 0;
 
   // The box keeps the asset's 46 × 70.4 so the stars are never letterboxed
-  // to a fractional offset; top 6.3 is where the old 77-tall box centred them.
+  // to a fractional offset.
   static const double starsLeft = 1, starsTop = 6.3;
   static const double starsWidth = 46, starsHeight = 70.4;
   static const double sloLeft = 4, sloTop = 78, sloWidth = 42;
@@ -143,30 +143,24 @@ abstract final class SloveniaPlates {
     diplomatic,
   ];
 
-  /// The group as one field: its box spans the cells at their pitch.
-  static List<PlateSlot> _slots(
-    _Group group,
-    PlateAlphabet alphabet,
-    Color? color,
-  ) {
+  /// The group as one slot: its box spans the cells at their pitch.
+  static PlateSlot _slot(_Group group, PlateAlphabet alphabet, Color? color) {
     final int count = group.centres.length;
     final double pitch = count > 1
         ? (group.centres.last - group.centres.first) / (count - 1)
         : group.width;
-    return <PlateSlot>[
-      PlateSlot(
-        alphabet: alphabet,
-        box: PlateBox(
-          group.centres.first - pitch / 2,
-          _Layout.top,
-          count * pitch,
-          _Layout.box,
-        ),
-        color: color,
-        length: count,
-        spacing: max(0, pitch - 0.6 * 0.72 * _Layout.box),
+    return PlateSlot(
+      alphabet: alphabet,
+      box: PlateBox(
+        group.centres.first - pitch / 2,
+        _Layout.top,
+        count * pitch,
+        _Layout.box,
       ),
-    ];
+      color: color,
+      length: count,
+      spacing: max(0, pitch - 0.6 * 0.72 * _Layout.box),
+    );
   }
 
   static PlateSpec _spec({
@@ -183,9 +177,9 @@ abstract final class SloveniaPlates {
     PlateLabelResolver? resolveRegion,
   }) {
     final List<PlateSlot> slots = <PlateSlot>[
-      ..._slots(region, regionAlphabet, regionColor),
-      ..._slots(a, aAlphabet, null),
-      ..._slots(b, bAlphabet, null),
+      _slot(region, regionAlphabet, regionColor),
+      _slot(a, aAlphabet, null),
+      _slot(b, bAlphabet, null),
     ];
     int next = 0;
     PlateTextGroup group(_Group g) {
