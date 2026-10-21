@@ -73,14 +73,6 @@ class _Group {
   final double width;
 }
 
-/// The Slovenian plates, each laid out as a `region` group, a dash and groups
-/// `a` and `b`.
-///
-/// [private] is the current registration, `LJ 898-KP` black on white with the
-/// EU band; [exportPlate] is the yellow export plate `MB LL-251` with no
-/// band; [police] is `P 06-697` in blue; [diplomatic] is `CD 08-05` with the
-/// `CD` in green.
-///
 /// Not implemented: the temporary plate (a red `PR` badge, whose photo is
 /// CHECK-fitted), military `SV`, motorcycle and the other special plates; no
 /// usable reference was measured for them. The crest and the export date
