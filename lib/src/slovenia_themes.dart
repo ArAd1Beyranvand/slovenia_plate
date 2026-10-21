@@ -6,8 +6,7 @@ import 'slovenia_colors.dart';
 /// One ink on one field; the export and diplomatic plates carry a frame in a
 /// colour of its own, the registration plate none.
 ///
-/// Frame widths are read off the flats at about 0.03 of the 120 height, the
-/// corner arc at about 0.07; neither is measured more closely than that.
+/// Frame width and corner arc are read off the flats, not measured closely.
 abstract final class SloveniaThemes {
   /// Registration: black on white, no frame.
   static final PlateTheme private = _theme(

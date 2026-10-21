@@ -2,10 +2,8 @@ import 'package:plate_core/plate_core.dart';
 
 import 'slovenia_colors.dart';
 
-/// Slovenia as a `PlateCountry`: the EU band. The twelve stars are the shared
-/// `EuropeanStars.band`; the `SLO` beneath them is a [PlateLabel] on the
-/// spec, so [captionLines] is empty. The export plate has no band and sets
-/// `noPanel`.
+/// The `SLO` beneath the EU band is a [PlateLabel] on the spec, so
+/// [PlateCountry.captionLines] is empty.
 abstract final class SloveniaCountry {
   static const PlateCountry slovenia = PlateCountry(
     code: 'si',

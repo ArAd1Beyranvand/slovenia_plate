@@ -9,29 +9,13 @@ import 'slovenia_colors.dart';
 import 'slovenia_country.dart';
 import 'slovenia_regions.dart';
 
-/// Where the ink sits, in plate units. Every photo is flattened to the
-/// 520×120 the article gives (4 px per unit).
+/// Plate-unit geometry, read off photos flattened to 520×120 (4 px per unit)
+/// and, for export and police, off the sheet at about ±5.
 ///
-/// Euroband: blue x 3.3–46.5 (`Registrska_tablica`), 8.3–54.5 (`CD`) and
-/// 18–53.5 (police); the flats crop the border differently, so one section
-/// ends at 47 under the frame. Stars occupy y 9.5–~60, the `SLO` beneath them
-/// to 104.
-///
-/// Centres (x), read off the flats' ink runs for the registration and
-/// diplomatic plates and off the sheet at about ±5 for export and police:
-/// - registration `LJ 898-KP`: `LJ` 85, 133; digits 240, 288, 336 (pitch
-///   48); dash 375; `KP` 412, 470. The crest sits in the gap x 163–207, y
-///   37–88 and is not drawn (a coat of arms, no usable vector).
-/// - export `MB LL-251`: `MB` 65, 117; `LL` 190, 238; dash 274; digits 308,
-///   352, 396. The two date stickers at the right are not drawn.
-/// - police `P 06-697`: `P` 128; digits 242, 290; dash 330; 372, 420, 468.
-///   The emblem x 163–205 is not drawn.
-/// - diplomatic `CD 08-05`: `CD` 128, 181; digits 281, 328; dash 365; 403, 449
-///   (pitch 46.7).
-///
-/// Ink is 95 tall on a 120 plate; a box that tall would need ~170, so every
-/// box is the full canvas height and the ink lands near 66, about 70% of
-/// reference.
+/// The band's blue spans different x on each flat because the crops differ, so
+/// one section ends at 47 under the frame. Ink is 95 tall on a 120 plate; a
+/// box that tall would need ~170, so every box is the full canvas height and
+/// the ink lands near 66, about 70% of reference.
 abstract final class _Layout {
   static const double width = 520, height = 120;
   static const double bandEnd = 47;
@@ -73,10 +57,9 @@ class _Group {
   final double width;
 }
 
-/// Not implemented: the temporary plate (a red `PR` badge, whose photo is
-/// CHECK-fitted), military `SV`, motorcycle and the other special plates; no
-/// usable reference was measured for them. The crest and the export date
-/// stickers are not drawn.
+/// Not implemented: the temporary plate, military `SV`, motorcycle and the
+/// other special plates (no usable reference). The crest in the registration
+/// gap and the export date stickers are not drawn.
 abstract final class SloveniaPlates {
   static final PlateSpec private = _spec(
     id: 'si.private',
@@ -173,11 +156,6 @@ abstract final class SloveniaPlates {
       _slot(a, aAlphabet, null),
       _slot(b, bAlphabet, null),
     ];
-    int next = 0;
-    PlateTextGroup group(_Group g) {
-      return PlateTextGroup(<int>[next++], key: g.key);
-    }
-
     return PlateSpec(
       id: id,
       country: SloveniaCountry.slovenia,
@@ -229,7 +207,10 @@ abstract final class SloveniaPlates {
           glyphHeight: _Layout.box,
         ),
       ],
-      textGroups: <PlateTextGroup>[group(region), group(a), group(b)],
+      textGroups: <PlateTextGroup>[
+        for (final (int i, _Group g) in <_Group>[region, a, b].indexed)
+          PlateTextGroup(<int>[i], key: g.key),
+      ],
       resolveRegion: resolveRegion,
     );
   }

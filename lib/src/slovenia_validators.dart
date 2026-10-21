@@ -1,6 +1,8 @@
 import 'package:plate_alphabet/plate_alphabet.dart';
 import 'package:plate_core/plate_core.dart';
 
+final RegExp _twoLetters = RegExp(r'^[A-Z]{2}$');
+
 /// Judges a Slovenian plate by its three groups, `region`, `a`, `b`.
 ///
 /// A registration is a unit code and then either three digits and two letters
@@ -26,25 +28,22 @@ class SloveniaValidator extends GatedPlateValidator {
     final String region = entry.group('region');
     final String a = entry.group('a');
     final String b = entry.group('b');
-    if (region == 'P') {
-      return isDigitsOfLength(a, 2) && isDigitsOfLength(b, 3)
-          ? const PlateValidation.valid()
-          : const PlateValidation.invalid(reasonPolice);
-    }
-    if (region == 'CD') {
-      return isDigitsOfLength(a, 2) && isDigitsOfLength(b, 2)
-          ? const PlateValidation.valid()
-          : const PlateValidation.invalid(reasonDiplomatic);
-    }
-    if (!SloveniaAlphabets.regionCodes.contains(region)) {
-      return const PlateValidation.invalid(reasonRegion);
-    }
-    final RegExp letters = RegExp(r'^[A-Z]{2}$');
-    final bool ok =
-        (isDigitsOfLength(a, 3) && letters.hasMatch(b)) ||
-        (letters.hasMatch(a) && isDigitsOfLength(b, 3));
-    return ok
-        ? const PlateValidation.valid()
-        : const PlateValidation.invalid(reasonSerial);
+    final (bool ok, String reason) = switch (region) {
+      'P' => (isDigitsOfLength(a, 2) && isDigitsOfLength(b, 3), reasonPolice),
+      'CD' => (
+        isDigitsOfLength(a, 2) && isDigitsOfLength(b, 2),
+        reasonDiplomatic,
+      ),
+      _ when !SloveniaAlphabets.regionCodes.contains(region) => (
+        false,
+        reasonRegion,
+      ),
+      _ => (
+        (isDigitsOfLength(a, 3) && _twoLetters.hasMatch(b)) ||
+            (_twoLetters.hasMatch(a) && isDigitsOfLength(b, 3)),
+        reasonSerial,
+      ),
+    };
+    return ok ? const PlateValidation.valid() : PlateValidation.invalid(reason);
   }
 }
