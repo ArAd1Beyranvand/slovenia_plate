@@ -24,10 +24,7 @@ void main() {
   });
 
   test('private and export plates follow each letter; others have none', () {
-    for (final PlateSpec spec in <PlateSpec>[
-      SloveniaPlates.private,
-      SloveniaPlates.exportPlate,
-    ]) {
+    for (final PlateSpec spec in <PlateSpec>[SloveniaPlates.private, SloveniaPlates.exportPlate]) {
       final PlateController c = PlateController(spec: spec);
       expect(c.regionCaption, isNull, reason: spec.id);
       c.setGroup('region', 'M');
