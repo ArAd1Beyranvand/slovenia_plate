@@ -111,7 +111,12 @@ abstract final class SloveniaPlates {
     dashCx: 365,
   );
 
-  static List<PlateSpec> get all => <PlateSpec>[private, exportPlate, police, diplomatic];
+  static List<PlateSpec> get all => <PlateSpec>[
+    private,
+    exportPlate,
+    police,
+    diplomatic,
+  ];
 
   /// The group as one slot: its box spans the cells at their pitch.
   static PlateSlot _slot(_Group group, PlateAlphabet alphabet, Color? color) {
@@ -121,7 +126,12 @@ abstract final class SloveniaPlates {
         : group.width;
     return PlateSlot(
       alphabet: alphabet,
-      box: PlateBox(group.centres.first - pitch / 2, _Layout.top, count * pitch, _Layout.box),
+      box: PlateBox(
+        group.centres.first - pitch / 2,
+        _Layout.top,
+        count * pitch,
+        _Layout.box,
+      ),
       color: color,
       length: count,
       spacing: max(0, pitch - 0.6 * 0.72 * _Layout.box),
@@ -165,7 +175,10 @@ abstract final class SloveniaPlates {
       noPanel: !band,
       background: band
           ? const PlateSection.columns(<PlatePart>[
-              PlatePart(PlateSection.fill(PlateFill.panel), end: _Layout.bandEnd),
+              PlatePart(
+                PlateSection.fill(PlateFill.panel),
+                end: _Layout.bandEnd,
+              ),
               PlatePart(PlateSection.plain),
             ])
           : PlateSection.plain,
@@ -174,7 +187,12 @@ abstract final class SloveniaPlates {
         if (band)
           const PlateLabel(
             text: 'SLO',
-            box: PlateBox(_Layout.sloLeft, _Layout.sloTop, _Layout.sloWidth, _Layout.sloHeight),
+            box: PlateBox(
+              _Layout.sloLeft,
+              _Layout.sloTop,
+              _Layout.sloWidth,
+              _Layout.sloHeight,
+            ),
             glyphHeight: _Layout.sloGlyph,
             color: SloveniaColors.white,
           ),

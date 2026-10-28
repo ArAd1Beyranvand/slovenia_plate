@@ -26,16 +26,32 @@ void main() {
   /// category id -> (spec, theme, space-separated sample value)
   final Map<String, (PlateSpec, PlateTheme, String)> cases =
       <String, (PlateSpec, PlateTheme, String)>{
-        'private': (SloveniaPlates.private, SloveniaThemes.private, 'LJ 898 KP'),
-        'export': (SloveniaPlates.exportPlate, SloveniaThemes.exportPlate, 'MB LL 251'),
+        'private': (
+          SloveniaPlates.private,
+          SloveniaThemes.private,
+          'LJ 898 KP',
+        ),
+        'export': (
+          SloveniaPlates.exportPlate,
+          SloveniaThemes.exportPlate,
+          'MB LL 251',
+        ),
         'police': (SloveniaPlates.police, SloveniaThemes.police, 'P 06 697'),
-        'diplomatic': (SloveniaPlates.diplomatic, SloveniaThemes.diplomatic, 'CD 08 05'),
+        'diplomatic': (
+          SloveniaPlates.diplomatic,
+          SloveniaThemes.diplomatic,
+          'CD 08 05',
+        ),
       };
 
-  for (final MapEntry<String, (PlateSpec, PlateTheme, String)> c in cases.entries) {
+  for (final MapEntry<String, (PlateSpec, PlateTheme, String)> c
+      in cases.entries) {
     testWidgets(c.key, (tester) async {
       final (PlateSpec spec, PlateTheme theme, String values) = c.value;
-      final PlateController controller = PlateController.fromValues(spec, values.split(' '));
+      final PlateController controller = PlateController.fromValues(
+        spec,
+        values.split(' '),
+      );
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -57,20 +73,30 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/si_${c.key}.png'));
+      await expectLater(
+        find.byType(PlateView),
+        matchesGoldenFile('goldens/si_${c.key}.png'),
+      );
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });
   }
 
   test('each group is one slot of its printed length', () {
-    expect(SloveniaPlates.private.slots.map((PlateSlot s) => s.length), <int>[2, 3, 2]);
-    expect(SloveniaPlates.police.slots.map((PlateSlot s) => s.length), <int>[1, 2, 3]);
-    final PlateController c = PlateController.fromValues(SloveniaPlates.private, <String?>[
-      'LJ',
-      '89',
-      'KP',
+    expect(SloveniaPlates.private.slots.map((PlateSlot s) => s.length), <int>[
+      2,
+      3,
+      2,
     ]);
+    expect(SloveniaPlates.police.slots.map((PlateSlot s) => s.length), <int>[
+      1,
+      2,
+      3,
+    ]);
+    final PlateController c = PlateController.fromValues(
+      SloveniaPlates.private,
+      <String?>['LJ', '89', 'KP'],
+    );
     expect(c.isCompleted, isFalse);
     c.dispose();
   });

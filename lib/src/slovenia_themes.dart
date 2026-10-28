@@ -42,10 +42,11 @@ abstract final class SloveniaThemes {
   );
 }
 
-PlateTheme _theme(Color field, Color ink, Color frame, double border) => PlateTheme.monochrome(
-  field: field,
-  ink: ink,
-  inactive: SloveniaColors.inactive,
-  borderWidthRatio: border,
-  plateRadiusRatio: 0.07,
-).copyWith(plateBorder: frame);
+PlateTheme _theme(Color field, Color ink, Color frame, double border) =>
+    PlateTheme.monochrome(
+      field: field,
+      ink: ink,
+      inactive: SloveniaColors.inactive,
+      borderWidthRatio: border,
+      plateRadiusRatio: 0.07,
+    ).copyWith(plateBorder: frame);
