@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui' show Color;
 
 import 'package:flutter/widgets.dart' show EdgeInsets;
@@ -17,8 +16,7 @@ import 'slovenia_regions.dart';
 /// box that tall would need ~170, so every box is the full canvas height and
 /// the ink lands near 66, about 70% of reference.
 abstract final class _Layout {
-  static const double width = 520, height = 120;
-  static const double bandEnd = 47;
+  static const double width = 520, height = 120, bandEnd = 47;
 
   static const double box = 120, top = 0;
 
@@ -124,17 +122,14 @@ abstract final class SloveniaPlates {
     final double pitch = count > 1
         ? (group.centres.last - group.centres.first) / (count - 1)
         : group.width;
-    return PlateSlot(
-      alphabet: alphabet,
-      box: PlateBox(
-        group.centres.first - pitch / 2,
-        _Layout.top,
-        count * pitch,
-        _Layout.box,
-      ),
+    return plateRun(
+      alphabet,
+      count,
+      left: group.centres.first - pitch / 2,
+      top: _Layout.top,
+      pitch: pitch,
+      height: _Layout.box,
       color: color,
-      length: count,
-      spacing: max(0, pitch - 0.6 * 0.72 * _Layout.box),
     );
   }
 

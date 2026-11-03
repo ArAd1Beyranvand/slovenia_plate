@@ -22,6 +22,4 @@ abstract final class SloveniaColors {
 
   static const Color diplomaticGreen = Color(0xFF38B838);
   static const Color diplomaticFrame = Color(0xFF30A020);
-
-  static const Color inactive = Color(0xFFB0B0B0);
 }

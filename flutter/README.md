@@ -6,13 +6,24 @@ GO VEGAN 🌱
 
 From the mighty people of Iran to the peaceful people of Slovenia to view examples:
 
-https://platexample.ir/#/discover/slovenia
+https://platexample.ir/#/discover/slovenia:flutter
 
 # slovenia_plate
 
-Slovenian licence plates for `plate_core`.
+Slovenia's licence plates for the plate_core library: the EU-band registration, export, police and diplomatic plates, with an advisory validator.
 
-## Install
+## Languages
+
+| Language | Folder | Example |
+| --- | --- | --- |
+| Flutter / Dart | [`flutter/`](https://github.com/ArAd1Beyranvand/slovenia_plate/tree/main/flutter) | [platexample](https://platexample.ir/#/discover/slovenia:flutter) |
+| Kotlin | [`kotlin/`](https://github.com/ArAd1Beyranvand/slovenia_plate/tree/main/kotlin) | [platexample](https://platexample.ir/#/discover/slovenia:kotlin) |
+| Python | [`python/`](https://github.com/ArAd1Beyranvand/slovenia_plate/tree/main/python) | [platexample](https://platexample.ir/#/discover/slovenia:python) |
+| TypeScript | [`typescript/`](https://github.com/ArAd1Beyranvand/slovenia_plate/tree/main/typescript) | [platexample](https://platexample.ir/#/discover/slovenia:typescript) |
+
+## Quick start
+
+### Install
 
 ```yaml
 dependencies:
@@ -20,7 +31,7 @@ dependencies:
   slovenia_plate: ^0.1.0
 ```
 
-## Use
+### Use
 
 ```dart
 import 'package:plate_core/plate_core.dart';
@@ -35,12 +46,30 @@ PlateCanvas(
 );
 ```
 
-## Contains
+## Specs
 
-- `SloveniaCountry` — country panel: `slovenia`.
-- `SloveniaPlates` — 4 plate specs: `private`, `exportPlate`, `police`, `diplomatic`.
-- `SloveniaThemes` — 4 themes: `private`, `exportPlate`, `police`, `diplomatic`.
-- `SloveniaValidator` — advisory validator; flags the frame, never blocks a keystroke.
+Each spec is one plate layout.
+
+- `SloveniaPlates.private` — id `si.private`
+- `SloveniaPlates.exportPlate` — id `si.export`
+- `SloveniaPlates.police` — id `si.police`
+- `SloveniaPlates.diplomatic` — id `si.diplomatic`
+
+## Themes
+
+- `SloveniaThemes.private`
+- `SloveniaThemes.exportPlate`
+- `SloveniaThemes.police`
+- `SloveniaThemes.diplomatic`
+
+## Change it
+
+`PlateCanvas` takes `spec:` (an entry of `SloveniaPlates`) and `theme:` (an entry of `SloveniaThemes`). Set `validator:` to `SloveniaValidator()` and `autoValidate: true` to show validation hints.
+
+## Also included
+
+- `SloveniaCountry` — the country panel.
+- `SloveniaValidator` — the plate validator.
 - `SloveniaRegions` — code table.
 
 ## Plates
@@ -53,3 +82,6 @@ gap and the export date stickers are not drawn.
 
 Painted by [`plate_core`](https://pub.dev/packages/plate_core); alphabets shared through [`plate_alphabet`](https://pub.dev/packages/plate_alphabet); optional character picker in [`plate_keypad`](https://pub.dev/packages/plate_keypad).
 
+## License
+
+See [LICENSE](https://github.com/ArAd1Beyranvand/slovenia_plate/blob/main/LICENSE).
